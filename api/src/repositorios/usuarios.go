@@ -128,6 +128,7 @@ func (repositorio Usuarios) Deletar(ID uint64) error {
 	return nil
 }
 
+// Busca usuario por e-mail
 func (repositorio Usuarios) BuscarPorEmail(email string) (modelos.Usuario, error) {
 	linha, err := repositorio.db.Query("select id,senha from usuarios where email = ?", email)
 	if err != nil {
@@ -144,4 +145,33 @@ func (repositorio Usuarios) BuscarPorEmail(email string) (modelos.Usuario, error
 	}
 
 	return usuario, nil
+}
+
+// Seguir usuario
+func (repositorio Usuarios) Seguir(usuarioID, seguidorID uint64) error {
+	statement, err := repositorio.db.Prepare("insert ignore into seguidores(usuario_id,seguidor_id) values (?,?)")
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	if _, err = statement.Exec(usuarioID, seguidorID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Deixar de seguir usuario
+func (repositorio Usuarios) Unfollow(usuarioID, seguidorID uint64) error {
+	statemenet, err := repositorio.db.Prepare(
+		"DELETE FROM seguidores WHERE usuario_id = ? and seguidor_id = ?",
+	)
+	if err != nil {
+		return err
+	}
+	if _, err := statemenet.Exec(usuarioID, seguidorID); err != nil {
+		return err
+	}
+	return nil
 }
