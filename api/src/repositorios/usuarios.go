@@ -164,14 +164,44 @@ func (repositorio Usuarios) Seguir(usuarioID, seguidorID uint64) error {
 
 // Deixar de seguir usuario
 func (repositorio Usuarios) Unfollow(usuarioID, seguidorID uint64) error {
-	statemenet, err := repositorio.db.Prepare(
+	statement, err := repositorio.db.Prepare(
 		"DELETE FROM seguidores WHERE usuario_id = ? and seguidor_id = ?",
 	)
 	if err != nil {
 		return err
 	}
-	if _, err := statemenet.Exec(usuarioID, seguidorID); err != nil {
+	defer statement.Close()
+
+	if _, err := statement.Exec(usuarioID, seguidorID); err != nil {
 		return err
 	}
 	return nil
+}
+
+// busca seguidores de um usuario
+func (repositorio Usuarios) SearchFollow(usuarioID uint64) ([]modelos.Usuario, error) {
+	linhas, err := repositorio.db.Query(
+		"SELECT u.id,u.nome,u.nick,u.email,u.criadoEm from usuarios u inner join seguidores s ON s.usuario_id = u.id where s.usuario_id = ?", usuarioID)
+	if err != nil {
+		return nil, err
+	}
+	defer linhas.Close()
+
+	var usuarios []modelos.Usuario
+	for linhas.Next() {
+		var usuario modelos.Usuario
+
+		if err = linhas.Scan(
+			&usuario.ID,
+			&usuario.Nome,
+			&usuario.Nick,
+			&usuario.Email,
+			&usuario.CriadoEm,
+		); err != nil {
+			return nil, err
+		}
+		usuarios = append(usuarios, usuario)
+	}
+	return usuarios, nil
+
 }
