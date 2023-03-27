@@ -65,7 +65,7 @@ func (repositorio Publicacoes) BuscarPorID(publicacaoID uint64) (modelos.Publica
 
 func (repositorio Publicacoes) Buscar(usuarioID uint64) ([]modelos.Publicacao, error) {
 	linhas, err := repositorio.db.Query(
-		"SELECT DISTINCT p.id,p.titulo,p.conteudo,p.autor_id,p.curtidas,p.criadaEm,u.nick from publicacoes p inner join usuarios u on u.id = p.autor_id inner join seguidores s on s.usuario_id = p.autor_id where u.id = ? or s.seguidor_id = ?", usuarioID, usuarioID,
+		"SELECT DISTINCT p.id,p.titulo,p.conteudo,p.autor_id,p.curtidas,p.criadaEm,u.nick from publicacoes p inner join usuarios u on u.id = p.autor_id inner join seguidores s on s.usuario_id = p.autor_id where u.id = ? or s.seguidor_id = ? order by b.id desc", usuarioID, usuarioID,
 	)
 	if err != nil {
 		return nil, err
@@ -90,4 +90,32 @@ func (repositorio Publicacoes) Buscar(usuarioID uint64) ([]modelos.Publicacao, e
 		publicacoes = append(publicacoes, publicacao)
 	}
 	return publicacoes, nil
+}
+
+// atualiza os dados de uma publicacao no banco de dados
+func (repositorio Publicacoes) Atualizar(publicacaoID uint64, publicacao modelos.Publicacao) error {
+	statement, err := repositorio.db.Prepare("update publicacoes set titulo = ?, conteudo = ? where id = ?")
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	if _, err = statement.Exec(publicacao.Titulo, publicacao.Conteudo, publicacaoID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (repositorio Publicacoes) Deletar(publicacaoID uint64) error {
+	statement, err := repositorio.db.Prepare("delete from publicacoes where id = ?")
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	if _, err = statement.Exec(publicacaoID); err != nil {
+		return err
+	}
+	return nil
 }
