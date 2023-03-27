@@ -121,7 +121,7 @@ func (repositorio Publicacoes) Deletar(publicacaoID uint64) error {
 }
 
 func (repositorio Publicacoes) BuscarPorUsuario(usuarioID uint64) ([]modelos.Publicacao, error) {
-	linhas, err := repositorio.db.Query("select p.id,p.titulo,conteudo,p.autor_id,p.curtidas,p.criadaEm,u.nick from publicacoes p join usuarios u on u.id = p.autor_id", usuarioID)
+	linhas, err := repositorio.db.Query("select p.id,p.titulo,conteudo,p.autor_id,p.curtidas,p.criadaEm,u.nick from publicacoes p join usuarios u on u.id = p.autor_id where p.autor_id = ?", usuarioID)
 	if err != nil {
 		return nil, err
 	}
