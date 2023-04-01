@@ -1,9 +1,12 @@
 package controllers
 
-import "net/http"
+import (
+	"fmt"
+	"net/http"
+)
 
 // Carregar tela de login
 func CarregarTelaDeLogin(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Teste")
 
-	w.Write([]byte("Tela de login"))
 }

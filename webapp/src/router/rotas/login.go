@@ -7,7 +7,7 @@ import (
 
 var rotasLogin = []Rota{
 	{
-		URI:                "/",
+		URI:                "/login",
 		Metodo:             http.MethodGet,
 		Funcao:             controllers.CarregarTelaDeLogin,
 		RequerAutenticacao: false,
