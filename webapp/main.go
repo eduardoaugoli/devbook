@@ -5,9 +5,11 @@ import (
 	"log"
 	"net/http"
 	"webapp/src/router"
+	"webapp/src/utils"
 )
 
 func main() {
+	utils.CarregarTempletes()
 	fmt.Println("Rodando Webapp!")
 
 	r := router.Gerar()
