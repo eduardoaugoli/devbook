@@ -10,9 +10,8 @@ import (
 
 func main() {
 	utils.CarregarTempletes()
-	fmt.Println("Rodando Webapp!")
-
 	r := router.Gerar()
+	fmt.Println("Rodando Webapp :3000!")
 	log.Fatal(http.ListenAndServe(":3000", r))
 
 }

@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
+	"webapp/src/utils"
 )
 
 // Carregar tela de login
 func CarregarTelaDeLogin(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Teste")
+	utils.ExecutarTemplete(w, "login.html", nil)
 
 }
