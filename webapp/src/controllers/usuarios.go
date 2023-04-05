@@ -1,0 +1,27 @@
+package controllers
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+)
+
+// Chama a API para cadastrar um usuario no banco
+func CriarUsuario(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	usuario, err := json.Marshal(map[string]string{
+		"nome":  r.FormValue("nome"),
+		"email": r.FormValue("email"),
+		"nick":  r.FormValue("nick"),
+		"senha": r.FormValue("senha"),
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(bytes.NewBuffer(usuario))
+}
