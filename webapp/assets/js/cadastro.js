@@ -20,6 +20,11 @@ function criarUsuario(evento){
 
         }
         
+    }).done(function () {
+        alert("Usuario cadastrado")    
+    }).fail(function(erro){
+        console.log(erro)
+        alert("Erro ao cadastrar")
     });
 }
 
