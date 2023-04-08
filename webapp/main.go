@@ -13,7 +13,8 @@ func main() {
 	config.Carregar()
 	utils.CarregarTempletes()
 	r := router.Gerar()
-	fmt.Println("Rodando Webapp :3000!")
-	log.Fatal(http.ListenAndServe(":3000", r))
+
+	fmt.Printf("Rodando Webapp %d\n", config.Porta)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.Porta), r))
 
 }
