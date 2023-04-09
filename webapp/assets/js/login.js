@@ -1,7 +1,7 @@
 $('#login').on('submit',fazerLogin);
 
-function fazerLogin(){
-    EventCounts.preventDefault();
+function fazerLogin(evento){
+    evento.preventDefault();
 
     $.ajax({
         url:"/login",
@@ -13,6 +13,7 @@ function fazerLogin(){
     }).done(function () {
         window.location = "/home";    
     }).fail(function(erro){
+        console.log(erro)
         alert("Usuario ou senha invalidos")
     });
 }

@@ -16,4 +16,7 @@ func CarregarPaginaDeCadastroDeUsuario(w http.ResponseWriter, r *http.Request) {
 	utils.ExecutarTemplete(w, "cadastro.html", nil)
 }
 
-
+// Carrega pagina principal da aplicacao
+func CarregarPaginaPrincipal(w http.ResponseWriter, r *http.Request) {
+	utils.ExecutarTemplete(w, "home.html", nil)
+}
