@@ -2,6 +2,8 @@ package modelos
 
 import "time"
 
+
+// Representa uma publicacao 
 type Publicacao struct {
 	ID        uint64    `json:"id,omitempty"`
 	Titulo    string    `json:"titulo,omitempty"`
