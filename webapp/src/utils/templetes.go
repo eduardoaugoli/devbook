@@ -10,6 +10,7 @@ var templates *template.Template
 // Carregar insere o templete hmlt na variavel template
 func CarregarTempletes() {
 	templates = template.Must(template.ParseGlob("views/*.html"))
+	templates = template.Must(templates.ParseGlob("views/templates/*.html"))
 
 }
 

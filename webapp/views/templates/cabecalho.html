@@ -1,0 +1,28 @@
+{{ define "cabecalho" }}
+<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">DevBook</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/perfil">My profile</a>
+          </li>
+          <li class="nav-item">
+            <form class="d-flex" role="search" action="/buscar-usuarios" method="GET">
+              <input class="form-control me-2" type="search" placeholder="Buscar Usuarios" aria-label="Search" id="usuario" name="usuario" required="required">
+            </form>
+          </li>
+        </ul>
+        <span class="navbar-text p-0">
+            <a href="/logout">Sair</a>
+        </span>
+      </div>
+    </div>
+  </nav>
+{{ end }}  
