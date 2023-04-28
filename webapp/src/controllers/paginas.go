@@ -11,6 +11,8 @@ import (
 	"webapp/src/requisicoes"
 	"webapp/src/respostas"
 	"webapp/src/utils"
+
+	"github.com/gorilla/mux"
 )
 
 // Carregar tela de login
@@ -55,4 +57,34 @@ func CarregarPaginaPrincipal(w http.ResponseWriter, r *http.Request) {
 		Publicacoes: publicacoes,
 		UsuarioID:   usuarioID,
 	})
+}
+
+func CarregaEdicaoPublicacao(w http.ResponseWriter, r *http.Request) {
+	parametros := mux.Vars(r)
+	publicacaoID, err := strconv.ParseUint(parametros["publicacaoId"], 10, 64)
+	if err != nil {
+		respostas.JSON(w, http.StatusBadRequest, respostas.Erro{Erro: err.Error()})
+		return
+	}
+
+	url := fmt.Sprint("%s/publicacoes/%d", config.APIURL, publicacaoID)
+	response, err := requisicoes.ExecRequestAuth(r, http.MethodGet, url, nil)
+	if err != nil {
+		respostas.JSON(w, http.StatusInternalServerError, respostas.Erro{Erro: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.StatusCodeErro(w, response)
+		return
+	}
+
+	var publicacao modelos.Publicacao
+	if err = json.NewDecoder(response.Body).Decode(&publicacao); err != nil {
+		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.Erro{Erro: err.Error()})
+		return
+	}
+
+	utils.ExecutarTemplete(w, "atualizar-publicacao.html", publicacao)
 }
