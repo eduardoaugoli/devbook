@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DebBook - Login</title>
     <link rel="stylesheet" type="text/css" href="/assets/css/login.css">
-    <script src="//code.jivosite.com/widget/5L2STbJBgZ" async></script>
+    {{ template "favicon" }}
+    
 </head>
 <body>
     <div class="container-login">
@@ -19,12 +20,18 @@
                 <div>
                     <input type="password" name="senha" id="senha" placeholder="Digite o sua Senha!" required="required">
                 </div>
-                <a href="/criar-usuario">Clique aqui para criar sua conta!</a>
+                
                 <button type="submit" class="btn-devbook">Login</button>
             </form>
+            <a href="/criar-usuario">Clique aqui para criar sua conta!</a>
         </div>
     </div>
-    <script src="/assets/js/jquery.min.js"></script>
+
+    {{template "rodape" }}
+    
+    {{template "scripts" }}
+    
     <script src="/assets/js/login.js"></script>
+    
 </body>
 </html>

@@ -10,8 +10,9 @@ function fazerLogin(evento){
             email:$('#email').val(),
             senha:$('#senha').val(),
         }
-    }).done(function () {
-        window.location = "/home";    
+    }).done(function(){
+        console.log("Teste")
+        //window.location = "/home"    
     }).fail(function(erro){
         console.log(erro)
         alert("Usuario ou senha invalidos")
